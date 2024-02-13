@@ -16,22 +16,29 @@ const { title, user, views, image, videoUrl, thumbnail } = toRefs(props);
 let show = ref(false);
 let showVideo = ref(false);
 let video = ref(null);
+let width = ref(document.documentElement.clientWidth);
 
-watch(() => {
-    show.value,
-        (show) => {
-            video.value.play();
-            if (show) {
-                showVideo.value = true;
-                video.value.play();
-                return "";
-            }
-
-            showVideo.value = false;
-            video.value.pause();
-            video.value.currentTime = 0;
-        };
+onMounted(() => {
+    window.addEventListener("resize", () => {
+        width.value = document.documentElement.clientWidth;
+    });
 });
+
+watch(
+    () => show.value,
+    (show) => {
+        // video.value.play();
+        if (show) {
+            showVideo.value = true;
+            video.value.play();
+            return "";
+        }
+
+        showVideo.value = false;
+        video.value.pause();
+        video.value.currentTime = 0;
+    }
+);
 </script>
 
 <template>
@@ -39,7 +46,7 @@ watch(() => {
         <div
             class="rounded-lg bg-black m-2"
             :class="[
-                show
+                show && width > 639
                     ? 'absolute z-30 transition ease-in-out delay-150 hover:translate-y-8 hover:scale-125 hover:bg-[#202020] duration-300'
                     : '',
             ]"
