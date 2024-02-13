@@ -7,11 +7,11 @@ import ThumbUpOutline from "vue-material-design-icons/ThumbUpOutline.vue";
 import ThumbDownOutline from "vue-material-design-icons/ThumbDownOutline.vue";
 import RecommendedVideos from "@/Components/RecommendedVideos.vue";
 
-// defineProps({
-//     canLogin: {
-//         type: Boolean,
-//     },
-// });
+defineProps({
+    video: Object,
+    comments: Array,
+    recommendedVideos: Array,
+});
 </script>
 
 <template>
