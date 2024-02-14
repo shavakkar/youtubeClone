@@ -41,8 +41,6 @@ const isNavOverlay = () => {
         openSideNavOverlay.value = !openSideNavOverlay.value;
     if (usePage().props.video)
         openSideNavOverlay.value = !openSideNavOverlay.value;
-    if (usePage().url === "/videos/1")
-        openSideNavOverlay.value = !openSideNavOverlay.value;
 };
 </script>
 
@@ -61,11 +59,13 @@ const isNavOverlay = () => {
                 </button>
 
                 <div class="mx-2"></div>
-                <div
+                <Link
+                    :href="route('home')"
                     class="flex items-center justify-center mr-10 cursor-pointer"
                 >
-                    YOUTUBE
-                </div>
+                    <img width="32" src="/images/YT-logo.png" />
+                    <img width="62" src="/images/YT-logo-text.png" />
+                </Link>
             </div>
 
             <div class="w-[600px] md:block hidden">
@@ -98,15 +98,24 @@ const isNavOverlay = () => {
                     :class="[!openSideNav ? 'p-2' : 'px-5 pb-2 pt-[7px]']"
                     class="mt-[60px] w-full"
                 >
-                    <SideNavItem :openSideNav="openSideNav" iconString="Home" />
-                    <SideNavItem
-                        :openSideNav="openSideNav"
-                        iconString="Add Video"
-                    />
-                    <SideNavItem
-                        :openSideNav="openSideNav"
-                        iconString="Delete Video"
-                    />
+                    <Link :href="route('home')">
+                        <SideNavItem
+                            :openSideNav="openSideNav"
+                            iconString="Home"
+                        />
+                    </Link>
+                    <Link :href="route('addVideo')">
+                        <SideNavItem
+                            :openSideNav="openSideNav"
+                            iconString="Add Video"
+                        />
+                    </Link>
+                    <Link :href="route('deleteVideo')">
+                        <SideNavItem
+                            :openSideNav="openSideNav"
+                            iconString="Delete Video"
+                        />
+                    </Link>
                     <div class="border-b border-b-gray-700 my-2.5"></div>
                     <SideNavItem
                         :openSideNav="openSideNav"
@@ -178,20 +187,31 @@ const isNavOverlay = () => {
                     </button>
 
                     <div class="mx-2"></div>
-                    <div
+                    <Link
+                        :href="route('home')"
                         class="flex items-center justify-center mr-10 cursor-pointer"
                     >
-                        YOUTUBE
-                    </div>
+                        <img width="32" src="/images/YT-logo.png" />
+                        <img width="62" src="/images/YT-logo-text.png" />
+                    </Link>
                 </div>
 
                 <ul class="w-full px-5 py-2 p-2 mt-2">
-                    <SideNavItem :openSideNav="true" iconString="Home" />
-                    <SideNavItem :openSideNav="true" iconString="Add Video" />
-                    <SideNavItem
-                        :openSideNav="true"
-                        iconString="Delete Video"
-                    />
+                    <Link :href="route('home')">
+                        <SideNavItem :openSideNav="true" iconString="Home" />
+                    </Link>
+                    <Link :href="route('addVideo')">
+                        <SideNavItem
+                            :openSideNav="true"
+                            iconString="Add Video"
+                        />
+                    </Link>
+                    <Link :href="route('deleteVideo')">
+                        <SideNavItem
+                            :openSideNav="true"
+                            iconString="Delete Video"
+                        />
+                    </Link>
                     <div class="border-b border-b-gray-700 my-2.5"></div>
                     <SideNavItem
                         :openSideNav="true"
