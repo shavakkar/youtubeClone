@@ -3,11 +3,9 @@ import { Head, Link } from "@inertiajs/vue3";
 
 import NavLayout from "@/Layouts/NavLayout.vue";
 
-// defineProps({
-//     canLogin: {
-//         type: Boolean,
-//     },
-// });
+defineProps({
+    videos: Array,
+});
 </script>
 
 <template>
@@ -32,32 +30,41 @@ import NavLayout from "@/Layouts/NavLayout.vue";
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="border-b flex">
-                        <td
-                            class="px-6 py-4 w-7/12 text-sm font-medium text-gray-900"
-                        >
-                            <video
-                                width="320"
-                                src="/videos/seoul.mp4"
-                                type="video/mp4"
-                                controls
-                            />
-                        </td>
-                        <td
-                            class="px-6 py-4 w-5/12 text-sm font-medium text-gray-900 relative"
-                        >
-                            <div class="text-white font-extrabold mb-4">
-                                This is a title
-                            </div>
-                            <div class="w-full">
-                                <button
-                                    class="text-white absolute bottom-4 right-4 text-xs bg-red-600 hover:bg-red-700 font-bold py-1 px-1 float-right rounded cursor-pointer"
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    <div v-for="video in videos" :key="video">
+                        <tr class="border-b flex">
+                            <td
+                                class="px-6 py-4 w-7/12 text-sm font-medium text-gray-900"
+                            >
+                                <video
+                                    width="320"
+                                    :src="video.video || ''"
+                                    type="video/mp4"
+                                    controls
+                                />
+                            </td>
+                            <td
+                                class="px-6 py-4 w-5/12 text-sm font-medium text-gray-900 relative"
+                            >
+                                <div class="text-white font-extrabold mb-4">
+                                    {{ video.title }}
+                                </div>
+                                <div class="w-full">
+                                    <Link
+                                        as="button"
+                                        method="delete"
+                                        :href="
+                                            route('videos.destory', {
+                                                id: video.id,
+                                            })
+                                        "
+                                        class="text-white absolute bottom-4 right-4 text-xs bg-red-600 hover:bg-red-700 font-bold py-1 px-1 float-right rounded cursor-pointer"
+                                    >
+                                        Delete
+                                    </Link>
+                                </div>
+                            </td>
+                        </tr>
+                    </div>
                 </tbody>
             </table>
         </div>

@@ -18,8 +18,8 @@ class VideosSeeder extends Seeder
     {
         DB::table('videos')->insert([
             'title' => 'Car from the future',
-            'thumbnail' => '/videos/Thumbnails/Auto.png',
-            'video' => '/videos/Auto.mp4',
+            'thumbnail' => '/video/Thumbnails/Auto.png',
+            'video' => '/video/Auto.mp4',
             'user' => 'John Weeks Dev',
             'views' => '34k views - 12 days ago',
             'created_at' => Carbon::now(),
@@ -28,8 +28,8 @@ class VideosSeeder extends Seeder
 
         DB::table('videos')->insert([
             'title' => 'Car in Race - FAST!!!',
-            'thumbnail' => '/videos/Thumbnails/Car.png',
-            'video' => '/videos/Car.mp4',
+            'thumbnail' => '/video/Thumbnails/Car.png',
+            'video' => '/video/Car.mp4',
             'user' => 'John Weeks Dev',
             'views' => '89k views - 2 months ago',
             'created_at' => Carbon::now(),
@@ -38,8 +38,8 @@ class VideosSeeder extends Seeder
 
         DB::table('videos')->insert([
             'title' => 'Cool red car',
-            'thumbnail' => '/videos/Thumbnails/Car1.png',
-            'video' => '/videos/Car1.mp4',
+            'thumbnail' => '/video/Thumbnails/Car1.png',
+            'video' => '/video/Car1.mp4',
             'user' => 'John Weeks Dev',
             'views' => '4k views - 6 days ago',
             'created_at' => Carbon::now(),

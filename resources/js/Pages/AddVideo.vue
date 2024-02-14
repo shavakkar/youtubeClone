@@ -1,13 +1,56 @@
 <script setup>
-import { Head, Link } from "@inertiajs/vue3";
-
+import { Head, router } from "@inertiajs/vue3";
+import { ref } from "vue";
 import NavLayout from "@/Layouts/NavLayout.vue";
 
-// defineProps({
-//     canLogin: {
-//         type: Boolean,
-//     },
-// });
+defineProps({
+    errors: Object,
+});
+
+let title = ref("");
+let image = ref("");
+let video = ref("");
+let error = ref({
+    title: null,
+    image: null,
+    video: null,
+});
+
+const addVideo = () => {
+    let err = false;
+
+    error.value.title = null;
+    error.value.image = null;
+    error.value.video = null;
+
+    if (!title.value) {
+        error.value.title = "Please enter a title";
+        err = true;
+    }
+    if (!image.value) {
+        error.value.image = "Please enter a thumbnail";
+        err = true;
+    }
+    if (!video.value) {
+        error.value.video = "Please enter a video";
+        err = true;
+    }
+
+    if (err) {
+        return;
+    }
+
+    let data = new FormData();
+
+    data.append("title", title.value);
+    data.append("image", image.value);
+    data.append("video", video.value);
+
+    router.post("/videos", data);
+};
+
+const getVideo = (e) => (video.value = e.target.files[0]);
+const getImage = (e) => (image.value = e.target.files[0]);
 </script>
 
 <template>
@@ -17,15 +60,18 @@ import NavLayout from "@/Layouts/NavLayout.vue";
             <div class="text-white font-extrabold text-3xl py-10">
                 Add Video
             </div>
-            <form>
+            <form @submit.prevent="addVideo">
                 <div>
                     <div class="text-gray-200">Title</div>
                     <input
+                        v-model="title"
                         type="text"
                         class="form-control block w-full px-5 py-1.5 text-xl font-normal text-gray-200 bg-black placeholder-gray-400 bg-clip-padding border border-solid border-gray-600 rounded transition ease-in-out m-0 border-transparent focus:ring-0"
                         placeholder="My cool video"
                     />
-                    <span class="text-red-500"> This is an error </span>
+                    <span v-if="error.title" class="text-red-500">
+                        {{ error.title }}
+                    </span>
                 </div>
 
                 <div class="my-5"></div>
@@ -33,10 +79,16 @@ import NavLayout from "@/Layouts/NavLayout.vue";
                 <div>
                     <div class="text-gray-200">Thumbnail</div>
                     <input
+                        @change="getImage"
                         type="file"
                         class="form-control block w-full px-3 py-1.5 text-white border border-solid border-gray-600 rounded transition ease-in-out m-0 focus:text-gray-700 focus:border-blue-600 focus:outline-none"
                     />
-                    <span class="text-red-500"> This is an error </span>
+                    <span v-if="error.image" class="text-red-500">
+                        {{ error.image }}
+                    </span>
+                    <span v-if="errors && errors.image" class="text-red-500">
+                        {{ errors.image }}
+                    </span>
                 </div>
 
                 <div class="my-5"></div>
@@ -44,10 +96,16 @@ import NavLayout from "@/Layouts/NavLayout.vue";
                 <div>
                     <div class="text-gray-200">Video/MP4</div>
                     <input
+                        @change="getVideo"
                         type="file"
                         class="form-control block w-full px-3 py-1.5 text-white border border-solid border-gray-600 rounded transition ease-in-out m-0 focus:text-gray-700 focus:border-blue-600 focus:outline-none"
                     />
-                    <span class="text-red-500"> This is an error </span>
+                    <span v-if="error.video" class="text-red-500">
+                        {{ error.video }}
+                    </span>
+                    <span v-if="errors && errors.video" class="text-red-500">
+                        {{ error.video }}
+                    </span>
                 </div>
 
                 <div class="my-5"></div>
